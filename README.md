@@ -8,21 +8,29 @@ Hospedada em: _(adicionar URL do Vercel após o primeiro deploy)_
 
 ## Stack
 
-- HTML5
-- CSS3 (mobile-first, sem frameworks)
-- JavaScript vanilla (sem build step)
-- Google Fonts (Inter)
+- [Next.js](https://nextjs.org/) (App Router)
+- React 19 + TypeScript
+- CSS global (mobile-first, sem Tailwind)
+- [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) (Inter)
+- [`next/image`](https://nextjs.org/docs/app/building-your-application/optimizing/images) para fotos e logo
 
-Zero dependências e zero processo de build. Basta servir os arquivos estáticos.
+Deploy otimizado na [Vercel](https://vercel.com/) (detecção automática de framework).
 
 ## Estrutura do projeto
 
 ```
 .
-├── index.html          # estrutura da página
-├── styles.css          # estilos (mobile-first, responsivo)
-├── script.js           # dados da equipe + render dos cards
-├── public/             # imagens estáticas
+├── app/
+│   ├── globals.css     # estilos (mobile-first)
+│   ├── layout.tsx      # layout raiz, metadados, fonte Inter
+│   └── page.tsx        # página inicial
+├── components/
+│   ├── TeamGrid.tsx    # grid de cards + links WhatsApp
+│   └── WhatsAppIcon.tsx
+├── lib/
+│   ├── corretoras.ts   # dados da equipe
+│   └── whatsapp.ts     # URL wa.me + mensagem padrão
+├── public/             # assets estáticos (servidos em /)
 │   ├── logo.png
 │   ├── achlley-orben.jpeg
 │   ├── carina-andrade.jpeg
@@ -30,48 +38,46 @@ Zero dependências e zero processo de build. Basta servir os arquivos estáticos
 │   ├── gislene-loch.jpeg
 │   ├── guilhermezappellini.jpeg
 │   └── tania-turazzi.jpeg
+├── next.config.ts
+├── package.json
+├── tsconfig.json
 ├── .gitignore
 └── README.md
 ```
 
 ## Rodar localmente
 
-Como é estático, qualquer servidor HTTP serve. As três opções mais práticas:
-
-**Python (já vem no Windows/Mac):**
+Requer [Node.js](https://nodejs.org/) 20+ (recomendado: LTS).
 
 ```bash
 cd c:\vl
-python -m http.server 8000
+npm install
+npm run dev
 ```
 
-**Node:**
+Abra [http://localhost:3000](http://localhost:3000).
+
+Build de produção:
 
 ```bash
-npx serve .
+npm run build
+npm start
 ```
-
-**VS Code:** extensão "Live Server" → botão direito no `index.html` → "Open with Live Server".
-
-Acesse `http://localhost:8000` (ou a porta indicada pelo servidor).
 
 ## Personalizar
 
-Toda a configuração da equipe está no array `CORRETORAS` no início de `script.js`:
+A equipe está em `lib/corretoras.ts`:
 
-```js
+```ts
 {
   nome: "Nome Sobrenome",
   cargo: "Corretora",
-  foto: "public/arquivo.jpeg",
-  whatsapp: "5548999999999", // 55 + DDD + número, só dígitos
+  foto: "/arquivo.jpeg",       // arquivo em public/
+  whatsapp: "5548999999999",   // 55 + DDD + número, só dígitos
 }
 ```
 
-Outros pontos de configuração no mesmo arquivo:
-
-- `CTA_TEXTO` — texto do botão (atualmente "WhatsApp")
-- `MENSAGEM_PADRAO` — mensagem que abre pré-preenchida no chat
+Texto do botão: constante `ctaTexto` no mesmo ficheiro. Mensagem pré-preenchida: função `mensagemPadrao` em `lib/whatsapp.ts`.
 
 ## Responsividade
 
@@ -87,13 +93,15 @@ Outros pontos de configuração no mesmo arquivo:
 - **Verde WhatsApp**: botão usa a cor oficial (`#25D366`) com ícone SVG.
 - **WhatsApp direto**: 1 toque = chat aberto com mensagem pré-preenchida.
 - **Acessibilidade**: `aria-label` em cada link, foco visível, contraste adequado, `prefers-reduced-motion` respeitado.
-- **Performance**: sem frameworks, sem build, fontes com `preconnect`, imagens com `loading="lazy"`.
+- **Performance**: imagens otimizadas com `next/image`, fonte auto-hospedada via `next/font`, cabeçalhos de segurança em `next.config.ts`.
 
-## Deploy
+## Deploy na Vercel
 
-Funciona em qualquer hospedagem estática (Vercel, Netlify, Cloudflare Pages, GitHub Pages, etc.).
+1. Faça push do repositório para o GitHub.
+2. Em [vercel.com/new](https://vercel.com/new), importe o projeto. A Vercel deteta Next.js e define `npm run build` e a pasta de output automaticamente.
+3. Cada push na branch de produção gera um novo deploy.
 
-### Vercel (recomendado)
+Alternativa CLI:
 
 ```bash
 npm i -g vercel
@@ -102,9 +110,6 @@ vercel        # preview
 vercel --prod # produção
 ```
 
-Ou conecte o repositório do GitHub em [vercel.com/new](https://vercel.com/new) — cada push faz deploy automático.
-
 ## Licença
 
 Uso interno Vip Lar Imobiliária.
-# new-vl

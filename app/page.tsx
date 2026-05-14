@@ -17,6 +17,7 @@ export default function Home() {
             priority
           />
         </div>
+        <p className="header__creci">CRECI 4917J</p>
         <p className="header__subtitle">
           Escolha um especialista e inicie uma conversa
         </p>

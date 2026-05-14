@@ -75,13 +75,21 @@ button {
 .header__logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
 }
 .header__logo img {
   height: 72px;
   max-width: 80%;
   width: auto;
   object-fit: contain;
+}
+.header__creci {
+  margin: 0 0 10px;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-brand);
+  text-transform: uppercase;
 }
 .header__subtitle {
   margin: 0;

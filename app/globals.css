@@ -13,6 +13,8 @@
   --color-text: #1a1a1a;
   --color-text-soft: #2a2a2a;
   --color-brand: #e30613;
+  /* Vermelho da arte da logo (CRECI e alinhamento visual) */
+  --color-logo-red: #cc0000;
 
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, sans-serif;
@@ -85,10 +87,10 @@ button {
 }
 .header__creci {
   margin: 0 0 10px;
-  font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--color-brand);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-logo-red);
   text-transform: uppercase;
 }
 .header__subtitle {
@@ -253,6 +255,9 @@ button {
   }
   .header__logo img {
     height: 100px;
+  }
+  .header__creci {
+    font-size: 0.74rem;
   }
   .header__subtitle {
     font-size: 1.1rem;

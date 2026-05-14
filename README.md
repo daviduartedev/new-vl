@@ -39,6 +39,7 @@ Deploy otimizado na [Vercel](https://vercel.com/) (detecção automática de fra
 │   ├── guilhermezappellini.jpeg
 │   └── tania-turazzi.jpeg
 ├── next.config.ts
+├── vercel.json         # força framework Next.js na Vercel
 ├── package.json
 ├── tsconfig.json
 ├── .gitignore
@@ -100,6 +101,18 @@ Texto do botão: constante `ctaTexto` no mesmo ficheiro. Mensagem pré-preenchid
 1. Faça push do repositório para o GitHub.
 2. Em [vercel.com/new](https://vercel.com/new), importe o projeto. A Vercel deteta Next.js e define `npm run build` e a pasta de output automaticamente.
 3. Cada push na branch de produção gera um novo deploy.
+
+### 404 com build “Ready” (Next.js)
+
+O repositório inclui `vercel.json` com `"framework": "nextjs"` para a Vercel aplicar sempre o preset correto.
+
+No dashboard do projeto: **Settings → General → Build & Development Settings**, confira:
+
+- **Framework Preset**: **Next.js** (não “Other” nem site estático genérico).
+- **Root Directory**: vazio ou `.` (use subpasta só se o app Next não estiver na raiz do repo).
+- **Output Directory**: **vazio**. Não defina `public`, `out` nem `.next` manualmente — para Next.js a Vercel usa o output interno; um valor errado aqui costuma gerar **404 em `/`** mesmo com build verde.
+
+Depois de alterar, faça **Redeploy** do último commit.
 
 Alternativa CLI:
 
